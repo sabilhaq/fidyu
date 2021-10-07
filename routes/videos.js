@@ -67,12 +67,12 @@ router.post("/", async function (req, res, next) {
 
       switch (file) {
         case "filevideo":
-          req.files[file].mv(path.join(__dirname, "..", `/public/uploads/videos/${fileName}-${id}.${extension}`));
+          req.files[file].mv(path.join("..", `/app/public/uploads/videos/${fileName}-${id}.${extension}`));
           req.body.url = `/uploads/videos/${fileName}-${id}.${extension}`
           break;
 
         case "filethumbnail":
-          req.files[file].mv(path.join(__dirname, "..", `/public/uploads/thumbnails/${fileName}-${id}.${extension}`));
+          req.files[file].mv(path.join(process.env.PWD, "..", `/app/public/uploads/thumbnails/${fileName}-${id}.${extension}`));
           req.body.thumbnail = `/uploads/thumbnails/${fileName}-${id}.${extension}`
           break;
 

@@ -25,7 +25,7 @@ app.use(
   express.urlencoded({ limit: "50mb", extended: true, parameterLimit: 50000 })
 );
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(process.env.PWD, "public")));
 app.use(fileUpload());
 app.use(bodyParser.json({ limit: "50mb" }));
 app.use(
