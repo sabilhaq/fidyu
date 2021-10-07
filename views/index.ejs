@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>
+    <%= title %>
+  </title>
+  <link rel="stylesheet" href="stylesheets/main.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+  <div class="index-container">
+    <div class="sidebar">
+      <div class="sidebar__header">
+        <img class="sidebar__header__menu" src="images/menu.svg" alt="Sidebar Menu">
+        <a class="sidebar__header__logo" href="#">
+          <img src="images/fidyu-logo.svg" width="100" alt="Youtube Logo">
+        </a>
+      </div>
+
+      <div class="sidebar__sections">
+        <div class="sidebar__sections__section">
+          <a href="#" class="active sidebar__sections__section__item">
+            <img src="images/home.svg" alt="">
+            Home
+          </a>
+          <a href="/videos" class="sidebar__sections__section__item">
+            <img src="images/tabler-icon-box-model-2.svg" alt="">
+            Your videos
+          </a>
+          <a href="#" class="sidebar__sections__section__item">
+            <img src="images/tabler-icon-settings.svg" alt="">
+            Setting
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="main">
+      <div class="main__header">
+        <div class="main__header__search">
+          <form class="main__header__search__form" action="">
+            <input class="main__header__search__form__input" type="search" name="search" id="search" placeholder="Search">
+
+            <button class="main__header__search__form__button">
+              <img src="images/magnify.svg" alt="">
+            </button>
+          </form>
+        </div>
+
+        <div class="main__header__icons">
+          <div class="main__header__icons__channel">
+
+            <% if (isLoggedIn) { %>
+
+            <form action="/api/auth/logout" method="POST" class="d-flex">
+              <button class="btn btn-outline-success main__header__icons__channel__icon btn-signout" type="submit">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <circle cx="12" cy="7" r="4" />
+                  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+                </svg>
+
+                SIGN OUT
+              </button>
+            </form>
+
+            <!-- <img class="main__header__icons__channel__icon isLoggedIn" src="https://unsplash.it/32/32/?gravity=center" alt=""> -->
+
+            <% } else { %>
+
+            <a href="/login" class="main__header__icons__channel__icon isNotLoggedIn">
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <circle cx="12" cy="7" r="4" />
+                <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+              </svg>
+              SIGN IN
+            </a>
+
+            <% } %>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="main__videos">
+        <div id="videosection" class="main__videos__section">
+          <!-- RESTFUL API -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let currentOffset = 16
+
+    $(document).ready(function() {
+      loadData()
+    })
+
+    $(window).scroll(function() {
+      if ($(window).scrollTop() == $(document).height() - $(window).height()) {
+        console.log("tes");
+
+        // offset = $("#offset").val()
+
+        loadNextPage(currentOffset)
+      }
+    })
+
+    const loadNextPage = (nextOffset) => {
+      // let filter = `${param?.filter ? param?.filter : ""}`
+      // let page = `${param?.pageNext ? "&page=" + param.pageNext : ""}`
+      // let sortBy = `${param?.sortBy ? "&sort=" + param?.sortBy : ""}`
+      // let sortOrder = `${param?.sortOrder ? "&order=" + param?.sortOrder : ""}`
+
+      // let allQueryParams = filter + page + sortBy + sortOrder
+      // allQueryParams = allQueryParams.replace(/\?/g, "&")
+      // allQueryParams = allQueryParams.replace("&", "?")
+
+      console.log(nextOffset);
+      nextOffset = nextOffset == "undefined" ? "" : nextOffset
+      console.log(nextOffset);
+
+      let url = `http://localhost:3000/api/videos?limit=4&offset=${nextOffset}`
+
+      $.ajax({
+        url
+      }).done(function(data) {
+        let {
+          offset,
+          videos,
+        } = data;
+
+        console.log("data:", data);
+        console.log("videos:", videos);
+        const options = {
+          year: "numeric",
+          month: "long",
+          day: "numeric"
+        }
+
+        // let htmlOffset = ""
+        // htmlOffset += `
+        //   <input id="offset" type="hidden" name="offset" value="${offset}">
+        // `
+
+        currentOffset = offset + 4
+
+        let htmlVideos = ""
+        videos.forEach(video => {
+          let newDate = new Date(video.createdAt)
+          let formattedDate = newDate.toLocaleDateString("id-ID", options)
+
+          htmlVideos += `
+          <a href="http://localhost:3000/watch/${video.id}" class="main__videos__section__video">
+            <img class="main__videos__section__video__thumbnail" src="${video.thumbnail}" alt="">
+
+            <div class="main__videos__section__video__metadata">
+              <img class="main__videos__section__video__metadata__icon" src="https://unsplash.it/32/32/?gravity=center" alt="">
+
+              <div class="main__videos__section__video__metadata__texts">
+                <div class="main__videos__section__video__metadata__texts__title">${video.title}</div>
+                <div class="main__videos__section__video__metadata__texts__channelname">${video.User ? video.User.firstName + " " + video.User.lastName : "anonymous"}</div>
+                <div>
+                  <span class="main__videos__section__video__metadata__texts__views">${video.views} views</span>
+                  <span class="main__videos__section__video__metadata__texts__point">&#9642;</span>
+                  <span class="main__videos__section__video__metadata__texts__uploadtime">${formattedDate}</span>
+                </div>
+              </div>
+            </div>
+          </a>
+          `
+        })
+
+        $('#videosection').children("a:last-child").after(htmlVideos)
+      })
+    }
+
+    const loadData = (param) => {
+      let filter = `${param?.filter ? param?.filter : ""}`
+      let page = `${param?.pageNext ? "&page=" + param.pageNext : ""}`
+      let sortBy = `${param?.sortBy ? "&sort=" + param?.sortBy : ""}`
+      let sortOrder = `${param?.sortOrder ? "&order=" + param?.sortOrder : ""}`
+
+      let allQueryParams = filter + page + sortBy + sortOrder
+      allQueryParams = allQueryParams.replace(/\?/g, "&")
+      allQueryParams = allQueryParams.replace("&", "?")
+
+      let url = `http://localhost:3000/api/videos${allQueryParams}`
+
+      $.ajax({
+        url
+      }).done(function(data) {
+        let {
+          offset,
+          videos,
+        } = data;
+
+        console.log(videos);
+        const options = {
+          year: "numeric",
+          month: "long",
+          day: "numeric"
+        }
+        let htmlVideos = ""
+
+        // currentOffset += offset + 4
+
+        videos.forEach(video => {
+          let newDate = new Date(video.createdAt)
+          let formattedDate = newDate.toLocaleDateString("id-ID", options)
+
+          htmlVideos += `
+          <a href="http://localhost:3000/watch/${video.id}" class="main__videos__section__video">
+            <img class="main__videos__section__video__thumbnail" src="${video.thumbnail}" alt="">
+
+            <div class="main__videos__section__video__metadata">
+              <img class="main__videos__section__video__metadata__icon" src="https://unsplash.it/32/32/?gravity=center" alt="">
+
+              <div class="main__videos__section__video__metadata__texts">
+                <div class="main__videos__section__video__metadata__texts__title">${video.title}</div>
+                <div class="main__videos__section__video__metadata__texts__channelname">${video.User ? video.User.firstName + " " + video.User.lastName : "anonymous"}</div>
+                <div>
+                  <span class="main__videos__section__video__metadata__texts__views">${video.views} views</span>
+                  <span class="main__videos__section__video__metadata__texts__point">&#9642;</span>
+                  <span class="main__videos__section__video__metadata__texts__uploadtime">${formattedDate}</span>
+                </div>
+              </div>
+            </div>
+          </a>
+          `
+        })
+
+        $('#videosection').html(htmlVideos)
+      })
+    }
+  </script>
+</body>
+
+</html>

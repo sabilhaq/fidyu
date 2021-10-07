@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Video</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+</head>
+
+<body>
+  <div class="container pt-3" style="max-width: none;">
+    <h1>Add Video</h1>
+    <hr>
+
+    <div class="container" style="max-width: none;">
+      <form enctype="multipart/form-data" id="form-add-video" action="" method="POST" class="m-auto w-75" style="max-width: 1000px;">
+        <div class="row mb-3 align-items-center justify-content-between">
+          <div class="col-auto">
+            <label class="form-check-label" for="title">Title</label>
+          </div>
+          <div class="col-auto w-75">
+            <input type="text" id="title" name="title" class="form-control" placeholder="Title">
+          </div>
+        </div>
+
+        <div class="row mb-3 align-items-center justify-content-between">
+          <div class="col-auto">
+            <label class="form-check-label" for="filevideo">Video</label>
+          </div>
+          <div class="col-auto w-75">
+            <input accept="video/*" type="file" id="filevideo" name="filevideo" class="form-control" placeholder="Video">
+          </div>
+        </div>
+
+        <div class="row mb-3 align-items-center justify-content-between">
+          <div class="col-auto">
+            <label class="form-check-label" for="filethumbnail">Thumbnail</label>
+          </div>
+          <div class="col-auto w-75">
+            <input accept="image/*" type="file" id="filethumbnail" name="filethumbnail" class="form-control" placeholder="Thumbnail">
+          </div>
+        </div>
+
+        <button class="btn btn-primary" type="submit">Save</button>
+        <a href="http://localhost:3000/videos" class="btn btn-outline-secondary btn-cancel">Cancel</a>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    $(document).on('submit', '#form-add-video', function(event) {
+      event.preventDefault()
+
+      let data = new FormData()
+
+      let filethumbnail = $("#filethumbnail")[0].files[0]
+      let filevideo = $("#filevideo")[0].files[0]
+      // console.log("filevideo:", filevideo);
+
+      data.append('filevideo', filevideo)
+      data.append('filethumbnail', filethumbnail)
+
+      var otherdata = $("#form-add-video").serializeArray()
+      $.each(otherdata, function(key, input) {
+        data.append(input.name, input.value)
+      })
+
+      console.log("1data:", data);
+
+      addVideo(data)
+      return false
+    })
+
+    const addVideo = (data) => {
+      $.ajax({
+        url: "http://localhost:3000/api/videos",
+        method: "POST",
+        // enctype: "multipart/form-data",
+        processData: false,
+        contentType: false,
+        data
+      }).done(function() {
+        window.location.href = "http://localhost:3000/videos"
+      }).fail(function(err) {
+        alert(err)
+      })
+    }
+  </script>
+</body>
+
+</html>

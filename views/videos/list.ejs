@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Videos</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <style>
+    .table th,
+    td {
+      border-top: 1px solid #ddd;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <a href="/" class="btn btn-primary">Home</a>
+
+    <h1>Videos</h1>
+    <hr>
+
+    <div class="container table-container mt-3">
+      <table id="table-videos" class="table table-striped table-hover">
+        <thead>
+          <tr>
+            <th>#<i class="fa fa-sort"></i></th>
+            <th>Title<i class="fa fa-sort"></i></th>
+            <th>URL<i class="fa fa-sort"></i></th>
+            <th>Like<i class="fa fa-sort"></i></th>
+            <th>Views<i class="fa fa-sort"></i></th>
+            <th>Thumbnail<i class="fa fa-sort"></i></th>
+            <th>Private<i class="fa fa-sort"></i></th>
+            <th>Category<i class="fa fa-sort"></i></th>
+            <th>Created At<i class="fa fa-sort"></i></th>
+            <th>Updated At<i class="fa fa-sort"></i></th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+        </tbody>
+      </table>
+
+      <a href="/videos/add" class="btn btn-primary" role="button">Add</a>
+    </div>
+  </div>
+
+  <script>
+    $(document).ready(function() {
+      loadData()
+    })
+
+    const loadData = (param) => {
+      let filter = `${param?.filter ? param?.filter : ""}`
+      let page = `${param?.pageNext ? "&page=" + param.pageNext : ""}`
+      let sortBy = `${param?.sortBy ? "&sort=" + param?.sortBy : ""}`
+      let sortOrder = `${param?.sortOrder ? "&order=" + param?.sortOrder : ""}`
+
+      let allQueryParams = filter + page + sortBy + sortOrder
+      allQueryParams = allQueryParams.replace(/\?/g, "&")
+      allQueryParams = allQueryParams.replace("&", "?")
+
+      let url = `http://localhost:3000/api/videos/admin${allQueryParams}`
+
+      $.ajax({
+        url
+      }).done(function(videos) {
+        console.log("videos:", videos);
+        const options = {
+          year: "numeric",
+          month: "long",
+          day: "numeric"
+        }
+        let htmlTbody = ""
+        videos.forEach(video => {
+          let newCreatedAt = new Date(video.createdAt)
+          let formattedCreatedAt = newCreatedAt.toLocaleDateString("id-ID", options)
+          let newUpdatedAt = new Date(video.createdAt)
+          let formattedUpdatedAt = newUpdatedAt.toLocaleDateString("id-ID", options)
+
+          htmlTbody += `
+          <tr>
+            <td>${video.id}</td>
+            <td>${video.title}</td>
+            <td>${video.url}</td>
+            <td>${video.likes}</td>
+            <td>${video.views}</td>
+            <td>${video.thumbnail}</td>
+            <td>${video.isPrivate}</td>
+            <td>${video.category}</td>
+            <td>${video.createdAt ? formattedCreatedAt : "kosong"}</td>
+            <td>${video.updatedAt ? formattedUpdatedAt : "kosong"}</td>
+            <td>
+              <button type="button" class="btn btn-success btn-edit" idvideo="${video._id}">Edit</button>
+              <button type="button" class="btn btn-danger btn-delete" idvideo="${video._id}">Delete</button>
+            </td>
+          </tr>
+          `
+        })
+
+
+        $('#table-videos tbody').html(htmlTbody)
+      })
+    }
+  </script>
+</body>
+
+</html>
