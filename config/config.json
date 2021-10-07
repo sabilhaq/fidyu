@@ -21,7 +21,8 @@
     "dialect": "postgres",
     "ssl": true,
     "dialectOptions": {
-      "ssl": true
+      "require": true,
+      "rejectUnauthorized": false
     }
   }
 }
