@@ -127,7 +127,7 @@
       nextOffset = nextOffset == "undefined" ? "" : nextOffset
       console.log(nextOffset);
 
-      let url = `http://localhost:3000/api/videos?limit=4&offset=${nextOffset}`
+      let url = `https://fidyu.herokuapp.com//api/videos?limit=4&offset=${nextOffset}`
 
       $.ajax({
         url
@@ -158,7 +158,7 @@
           let formattedDate = newDate.toLocaleDateString("id-ID", options)
 
           htmlVideos += `
-          <a href="http://localhost:3000/watch/${video.id}" class="main__videos__section__video">
+          <a href="https://fidyu.herokuapp.com//watch/${video.id}" class="main__videos__section__video">
             <img class="main__videos__section__video__thumbnail" src="${video.thumbnail}" alt="">
 
             <div class="main__videos__section__video__metadata">
@@ -192,7 +192,7 @@
       allQueryParams = allQueryParams.replace(/\?/g, "&")
       allQueryParams = allQueryParams.replace("&", "?")
 
-      let url = `http://localhost:3000/api/videos${allQueryParams}`
+      let url = `https://fidyu.herokuapp.com//api/videos${allQueryParams}`
 
       $.ajax({
         url
@@ -217,7 +217,7 @@
           let formattedDate = newDate.toLocaleDateString("id-ID", options)
 
           htmlVideos += `
-          <a href="http://localhost:3000/watch/${video.id}" class="main__videos__section__video">
+          <a href="https://fidyu.herokuapp.com//watch/${video.id}" class="main__videos__section__video">
             <img class="main__videos__section__video__thumbnail" src="${video.thumbnail}" alt="">
 
             <div class="main__videos__section__video__metadata">

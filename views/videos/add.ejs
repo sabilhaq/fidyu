@@ -46,7 +46,7 @@
         </div>
 
         <button class="btn btn-primary" type="submit">Save</button>
-        <a href="http://localhost:3000/videos" class="btn btn-outline-secondary btn-cancel">Cancel</a>
+        <a href="https://fidyu.herokuapp.com//videos" class="btn btn-outline-secondary btn-cancel">Cancel</a>
       </form>
     </div>
   </div>
@@ -77,14 +77,14 @@
 
     const addVideo = (data) => {
       $.ajax({
-        url: "http://localhost:3000/api/videos",
+        url: "https://fidyu.herokuapp.com//api/videos",
         method: "POST",
         // enctype: "multipart/form-data",
         processData: false,
         contentType: false,
         data
       }).done(function() {
-        window.location.href = "http://localhost:3000/videos"
+        window.location.href = "https://fidyu.herokuapp.com//videos"
       }).fail(function(err) {
         alert(err)
       })
