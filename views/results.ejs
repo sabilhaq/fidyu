@@ -1,0 +1,84 @@
+<%- include("./partials/header") -%>
+<link rel="stylesheet" href="stylesheets/main.css">
+</head>
+
+<body>
+  <input type="hidden" id="fullurlpath" name="fullurlpath" value="<%= fullurlpath %>">
+
+  <div class="results-container">
+    <%- include("./partials/sidebar") -%>
+
+    <div class="main">
+      <%- include("./partials/main-header") -%>
+
+      <div class="main__videos">
+        <div id="videosection" class="main__videos__section">
+          <!-- RESTFUL API -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const fullurlpath = $("#fullurlpath").val()
+
+    $(document).ready(function() {
+      loadData()
+    })
+
+    const loadData = (param) => {
+      let queryArr = fullurlpath.split("?")
+      console.log(queryArr);
+      queryArr.shift()
+      let querystring = queryArr.join("?")
+      querystring = querystring ? `?${querystring}` : ""
+      console.log(querystring);
+
+      let url = `http://localhost:3000/api/videos${querystring}`
+
+      $.ajax({
+        url
+      }).done(function(data) {
+        let {
+          offset,
+          videos,
+        } = data;
+
+        console.log(videos);
+        const options = {
+          year: "numeric",
+          month: "long",
+          day: "numeric"
+        }
+        let htmlVideos = ""
+
+        videos.forEach(video => {
+          let newDate = new Date(video.createdAt)
+          let formattedDate = newDate.toLocaleDateString("id-ID", options)
+
+          htmlVideos += `
+          <a href="http://localhost:3000/watch/${video.id}" class="main__videos__section__video">
+            <img class="main__videos__section__video__thumbnail" src="${video.thumbnail}" alt="">
+            <div class="main__videos__section__video__metadata">
+              <div class="main__videos__section__video__metadata__title">${video.title}</div>
+              <div class="main__videos__section__video__metadata__views">
+                <span class="main__videos__section__video__metadata__texts__views">${video.views} views</span>
+                <span class="main__videos__section__video__metadata__texts__point">&#9642;</span>
+                <span class="main__videos__section__video__metadata__texts__uploadtime">${formattedDate}</span>
+              </div>
+              <div class="main__videos__section__video__metadata__channel">${video.User ? video.User.firstName + " " + video.User.lastName : "anonymous"}</div>
+              <div class="main__videos__section__video__metadata__preview">
+                ${video.description}
+              </div>
+            </div>
+          </a>
+          `
+        })
+
+        $('#videosection').html(htmlVideos)
+      })
+    }
+  </script>
+</body>
+
+<%- include("./partials/footer") -%>
