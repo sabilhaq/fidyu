@@ -1,0 +1,44 @@
+<div class="main__header">
+  <div class="main__header__search">
+    <form class="main__header__search__form" action="/results" method="GET">
+      <input value="<%= queryString && queryString.search %>" class="main__header__search__form__input" type="search" name="search" id="search" placeholder="Search">
+
+      <button class="main__header__search__form__button">
+        <img src="images/magnify.svg" alt="">
+      </button>
+    </form>
+  </div>
+
+  <div class="main__header__icons">
+    <div class="main__header__icons__channel">
+
+      <% if (isLoggedIn) { %>
+
+      <form action="/api/auth/logout" method="POST" class="d-flex">
+        <button class="btn btn-outline-success main__header__icons__channel__icon btn-signout" type="submit">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+            <circle cx="12" cy="7" r="4" />
+            <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+          </svg>
+
+          SIGN OUT
+        </button>
+      </form>
+
+      <% } else { %>
+
+      <a href="/login" class="main__header__icons__channel__icon isNotLoggedIn">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+          <circle cx="12" cy="7" r="4" />
+          <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+        </svg>
+        SIGN IN
+      </a>
+
+      <% } %>
+
+    </div>
+  </div>
+</div>
