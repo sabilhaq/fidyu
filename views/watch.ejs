@@ -140,7 +140,7 @@
     $("#video-metadata").on("submit", "#form-add-like", function(event) {
       event.preventDefault()
       if (!userId) {
-        window.location.href = "https://fidyu.herokuapp.com/login"
+        window.location.href = "http://localhost:3000/login"
       } else {
         addLike()
       }
@@ -150,7 +150,7 @@
     const addLike = () => {
       $.ajax({
         method: "PUT",
-        url: `https://fidyu.herokuapp.com/api/videos/${videoid}/like`,
+        url: `http://localhost:3000/api/videos/${videoid}/like`,
         data: {}
       }).done(function() {
         loadData()
@@ -162,7 +162,7 @@
     $("#video-metadata").on("submit", "#form-add-dislike", function(event) {
       event.preventDefault()
       if (!userId) {
-        window.location.href = "https://fidyu.herokuapp.com/login"
+        window.location.href = "http://localhost:3000/login"
       } else {
         addDislike()
       }
@@ -172,7 +172,7 @@
     const addDislike = () => {
       $.ajax({
         method: "PUT",
-        url: `https://fidyu.herokuapp.com/api/videos/${videoid}/dislike`,
+        url: `http://localhost:3000/api/videos/${videoid}/dislike`,
         data: {}
       }).done(function() {
         loadData()
@@ -197,7 +197,7 @@
       }
       $.ajax({
         method: "POST",
-        url: `https://fidyu.herokuapp.com/api/comments`,
+        url: `http://localhost:3000/api/comments`,
         data
       }).done(function() {
         loadData()
@@ -208,12 +208,12 @@
 
     $("#comment").focus(function(event) {
       if (!userId) {
-        window.location.href = "https://fidyu.herokuapp.com/login"
+        window.location.href = "http://localhost:3000/login"
       }
     })
 
     const loadData = (param) => {
-      let url = `https://fidyu.herokuapp.com/api/videos/${videoid}`
+      let url = `http://localhost:3000/api/videos/${videoid}`
 
       $.ajax({
         url
