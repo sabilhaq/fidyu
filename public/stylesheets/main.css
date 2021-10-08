@@ -10,19 +10,13 @@ a {
   text-decoration: none;
 }
 
-.index-container {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-}
-
-.index-container .sidebar {
+.sidebar {
   width: 200px;
   position: fixed;
   height: 100%;
 }
 
-.index-container .sidebar__header {
+.sidebar__header {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -32,29 +26,29 @@ a {
   padding: 1rem;
 }
 
-.index-container .sidebar__header__menu {
+.sidebar__header__menu {
   width: 24px;
   margin-right: 1rem;
   cursor: pointer;
 }
 
-.index-container .sidebar__header__logo {
+.sidebar__header__logo {
   cursor: pointer;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
 }
 
-.index-container .sidebar__sections__section {
+.sidebar__sections__section {
   padding: 0.75rem 0;
   border-bottom: 1px solid #e6e5e5;
 }
 
-.index-container .sidebar__sections__section:first-child {
+.sidebar__sections__section:first-child {
   padding-top: 0;
 }
 
-.index-container .sidebar__sections__section__title {
+.sidebar__sections__section__title {
   padding: 0 1rem;
   font-size: 14px;
   font-weight: bold;
@@ -62,7 +56,7 @@ a {
   margin-bottom: 0.5rem;
 }
 
-.index-container .sidebar__sections__section__item {
+.sidebar__sections__section__item {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -73,32 +67,32 @@ a {
   color: #000;
 }
 
-.index-container .sidebar__sections__section__item span {
+.sidebar__sections__section__item span {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.index-container .sidebar__sections__section__item:hover {
+.sidebar__sections__section__item:hover {
   background-color: #eeeeee;
 }
 
-.index-container .sidebar__sections__section__item.active {
+.sidebar__sections__section__item.active {
   background-color: #e2e2e2;
 }
 
-.index-container .sidebar__sections__section__item img {
+.sidebar__sections__section__item img {
   margin-right: 1rem;
   border-radius: 50%;
 }
 
-.index-container .sidebar__sections__section__item__channel {
+.sidebar__sections__section__item__channel {
   width: 24px;
   height: 24px;
   background-color: #aaa;
 }
 
-.index-container .main {
+.main {
   -webkit-box-flex: 1;
       -ms-flex-positive: 1;
           flex-grow: 1;
@@ -113,7 +107,7 @@ a {
   margin-left: 200px;
 }
 
-.index-container .main__header {
+.main__header {
   position: fixed;
   padding: 0.5rem;
   display: -webkit-box;
@@ -129,7 +123,7 @@ a {
   width: calc(100% - 200px);
 }
 
-.index-container .main__header__search {
+.main__header__search {
   -webkit-box-flex: 1;
       -ms-flex-positive: 1;
           flex-grow: 1;
@@ -141,7 +135,7 @@ a {
           justify-content: center;
 }
 
-.index-container .main__header__search__form {
+.main__header__search__form {
   width: 500px;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -151,14 +145,14 @@ a {
           align-items: center;
 }
 
-.index-container .main__header__search__form__input {
+.main__header__search__form__input {
   width: 100%;
   height: 35px;
   border: 1px solid #c9c9c9;
   padding: 0.5rem 0.75rem;
 }
 
-.index-container .main__header__search__form__button {
+.main__header__search__form__button {
   padding: 0.25rem 1rem;
   border-radius: 0;
   border: 1px solid #c9c9c9;
@@ -167,11 +161,11 @@ a {
   cursor: pointer;
 }
 
-.index-container .main__header__search__form__button:hover {
+.main__header__search__form__button:hover {
   background-color: #e2e2e2;
 }
 
-.index-container .main__header__icons {
+.main__header__icons {
   width: 220px;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -182,7 +176,7 @@ a {
           flex-direction: row-reverse;
 }
 
-.index-container .main__header__icons__channel {
+.main__header__icons__channel {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -191,7 +185,7 @@ a {
           align-items: center;
 }
 
-.index-container .main__header__icons__channel__icon.isLoggedIn {
+.main__header__icons__channel__icon.isLoggedIn {
   border-radius: 50%;
   width: 32px;
   height: 32px;
@@ -200,7 +194,7 @@ a {
   margin-left: 1rem;
 }
 
-.index-container .main__header__icons__channel__icon {
+.main__header__icons__channel__icon {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -216,25 +210,31 @@ a {
   background-color: #fff;
 }
 
-.index-container .main__header__icons__channel__icon.isNotLoggedIn {
+.main__header__icons__channel__icon.isNotLoggedIn {
   border: 1px solid #007fb9;
   color: #007fb9;
   font-size: 14px;
 }
 
-.index-container .main__header__icons__channel__icon.isNotLoggedIn:hover {
+.main__header__icons__channel__icon.isNotLoggedIn:hover {
   background-color: #007fb9;
   color: #fff;
 }
 
-.index-container .main__header__icons__channel__icon.btn-signout {
+.main__header__icons__channel__icon.btn-signout {
   border: 1px solid #b41500;
   color: #b41500;
 }
 
-.index-container .main__header__icons__channel__icon.btn-signout:hover {
+.main__header__icons__channel__icon.btn-signout:hover {
   background-color: #b41500;
   color: #fff;
+}
+
+.index-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
 }
 
 .index-container .main__videos {
@@ -313,5 +313,61 @@ a {
 .index-container .main__videos__section__video__metadata__texts div:last-child {
   font-size: 14px;
   color: #696969;
+}
+
+.results-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.results-container .main__videos {
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  padding: 1rem;
+  padding-right: 0;
+  background-color: #fcfcfc;
+  margin-top: 58px;
+}
+
+.results-container .main__videos__section__video {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  max-height: 200px;
+  margin-bottom: 1rem;
+}
+
+.results-container .main__videos__section__video__thumbnail {
+  margin-right: 1rem;
+  min-width: 350px;
+  height: 200px;
+}
+
+.results-container .main__videos__section__video__metadata {
+  color: #000;
+}
+
+.results-container .main__videos__section__video__metadata__title {
+  font-weight: bold;
+}
+
+.results-container .main__videos__section__video__metadata__views {
+  font-size: 12px;
+}
+
+.results-container .main__videos__section__video__metadata__channel {
+  font-size: 12px;
+  margin: 1rem 0;
+}
+
+.results-container .main__videos__section__video__metadata__preview {
+  font-size: 12px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 /*# sourceMappingURL=main.css.map */
